@@ -5,7 +5,7 @@
 
 from scrapy.item import Item, Field
 
-class ApkspiderItem(Item):
+class ApkItem(Item):
     # define the fields for your item here like:
     name = Field()
     packageName = Field()
