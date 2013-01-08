@@ -13,5 +13,7 @@ NEWSPIDER_MODULE = 'apkSpider.spiders'
 
 ITEM_PIPELINES = ['apkSpider.pipelines.ApkPipeline']
 
+DOWNLOAD_DELAY = 0.25
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'apkSpider (+http://www.yourdomain.com)'
