@@ -1,0 +1,25 @@
+# coding: utf-8
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.selector import HtmlXPathSelector
+from apkSpider.items import ApkItem
+
+class ApkDownloadsSpider(CrawlSpider):
+    name="apkdownloads"
+    allowed_domains=["apkdownloads.com"]
+    start_urls=["http://www.apkdownloads.com/2013_01_09_archive.html"]
+    rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_\d{2}_\d{2}_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'game/2013/\d{2}/.+?\.html']),callback='parse_game')]
+
+    def parse_game(self,response):
+        #TODO
+        hxs=HtmlXPathSelector(response)
+        values=hxs.select('//div[@id="apkMetaInfo"]/ul')
+        item=ApkItem()
+        item['name']=values.select('li[1]/em/text()').extract()
+        item['packageName']=values.select('li[2]/em/text()').extract()
+        item['version']=values.select('li[3]/em/text()').extract()
+        item['category']=values.select('li[5]/em/text()').extract()
+        item['size']=values.select('li[7]/em/text()').extract()
+        item['lastUpdated']=values.select('li[8]/em/text()').extract()
+        item['tags']=values.select('li[9]/em/a/text()').extract()
+        return item
