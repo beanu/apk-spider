@@ -16,9 +16,9 @@ class CoolApkSpider(CrawlSpider):
         item=ApkItem()
         item['name']=values.select('li[1]/em/text()').extract()
         item['packageName']=values.select('li[2]/em/text()').extract()
-        item['version']=values.select('li[3]/em/text()').extract()
+        item['currentVersion']=values.select('li[3]/em/text()').extract()
         item['category']=values.select('li[5]/em/text()').extract()
-        item['size']=values.select('li[7]/em/text()').extract()
-        item['lastUpdated']=values.select('li[8]/em/text()').extract()
+        item['fileSize']=values.select('li[7]/em/text()').extract()
+        item['datePublished']=values.select('li[8]/em/text()').extract()
         item['tags']=values.select('li[9]/em/a/text()').extract()
         return item

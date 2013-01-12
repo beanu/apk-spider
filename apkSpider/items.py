@@ -9,8 +9,30 @@ class ApkItem(Item):
     # define the fields for your item here like:
     name = Field()
     packageName = Field()
-    version = Field()
+    company = Field()
+    #rate
+    rate = Field()
+    votes = Field()
+    #about
+    datePublished = Field()
+    currentVersion = Field()
+    os = Field()
     category = Field()
-    size = Field()
-    lastUpdated = Field()
+    numDownloads = Field()
+    fileSize = Field()
+    price = Field()
+    #image
+    apkicon = Field()
+    bannerimage = Field()
+    screenshot = Field()
+    #video
+    video = Field()
+    #description
+    description = Field()
+    #whatsnew
+    whatsnew = Field()
+    #other
     tags = Field()
+
+    def __str__(self):
+        return 'name:s% package:s% company:s% rate:s% votes:s% datePublished:s% currentVersion:s% os:s% category:s% numDownloads:s% fileSize:s% price:s%' % (self.name,self.packageName,self.company,self.rate,self.votes,self.datePublished,self.currentVersion,self.os,self.category,self.numDownloads,self.fileSize,self.price)
