@@ -7,10 +7,10 @@ from scrapy.http import Request
 
 class ApkDownloadsSpider(CrawlSpider):
     name="apkdownloads"
-    allowed_domains=["apkdownloads.com"]
+    allowed_domains=["apkdownloads.com|play.google.com"]
     start_urls=["http://www.apkdownloads.com"]
     #rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_\d{2}_\d{2}_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'/2013/\d{2}/.+?\.html']),callback='parse_game')]
-    rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_01_10_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'/2013/\d{2}/.+?\.html']),callback='parse_game')]
+    rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_01_11_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'/2013/\d{2}/.+?\.html']),callback='parse_game')]
 
     def parse_game(self,response):
         hxs=HtmlXPathSelector(response)

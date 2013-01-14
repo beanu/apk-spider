@@ -33,6 +33,3 @@ class ApkItem(Item):
     whatsnew = Field()
     #other
     tags = Field()
-
-    def __str__(self):
-        return 'name:s% package:s% company:s% rate:s% votes:s% datePublished:s% currentVersion:s% os:s% category:s% numDownloads:s% fileSize:s% price:s%' % (self.name,self.packageName,self.company,self.rate,self.votes,self.datePublished,self.currentVersion,self.os,self.category,self.numDownloads,self.fileSize,self.price)
