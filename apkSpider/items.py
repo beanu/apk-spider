@@ -33,3 +33,5 @@ class ApkItem(Item):
     whatsnew = Field()
     #other
     tags = Field()
+    downloadUrl = Field()
+    comefrom = Field()
