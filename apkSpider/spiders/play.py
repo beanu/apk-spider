@@ -7,6 +7,7 @@ def parse_google(response):
     hxs=HtmlXPathSelector(response)
     item=ApkItem()
     item['downloadUrl']=downloadUrl
+    item['packageName']=response.url[response.url.find('id=')+3:response.url.find('&')]
     item['comefrom']=comefrom
     #html_title
     html_title=hxs.select('//div[@class="doc-banner-container"]')

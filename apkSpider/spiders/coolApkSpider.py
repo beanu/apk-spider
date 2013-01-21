@@ -3,6 +3,8 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from apkSpider.items import ApkItem
+from scrapy.http import Request
+from play import parse_google
 
 class CoolApkSpider(CrawlSpider):
     name="coolapk"
@@ -12,13 +14,7 @@ class CoolApkSpider(CrawlSpider):
 
     def parse_game(self,response):
         hxs=HtmlXPathSelector(response)
-        values=hxs.select('//div[@id="apkMetaInfo"]/ul')
-        item=ApkItem()
-        item['name']=values.select('li[1]/em/text()').extract()
-        item['packageName']=values.select('li[2]/em/text()').extract()
-        item['currentVersion']=values.select('li[3]/em/text()').extract()
-        item['category']=values.select('li[5]/em/text()').extract()
-        item['fileSize']=values.select('li[7]/em/text()').extract()
-        item['datePublished']=values.select('li[8]/em/text()').extract()
-        item['tags']=values.select('li[9]/em/a/text()').extract()
-        return item
+        googleUrl=hxs.select('//span[@class="caption"]/a/@href').extract()
+        downloadUrl=hxs.select('//a[@class="pDown"]/@href').extract()
+        downloadUrl[0]="www.coolapk.com"+downloadUrl[0]
+        yield Request(url=googleUrl,meta={'downloadUrl': downloadUrl,'comefrom':'coolapk'},callback=parse_google)
