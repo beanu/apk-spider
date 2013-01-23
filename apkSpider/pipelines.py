@@ -4,8 +4,8 @@
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 import pymongo
 from scrapy.exceptions import DropItem
-from scrapy.contrib.pipeline.images import ImagesPipeline
 from scrapy.http import Request
+from apkSpider.mypipelines import MyImagesPipeline
 
 #1.Verify the validity of the data.Such as whether already exists
 class VerifyPipeline(object):
@@ -14,6 +14,10 @@ class VerifyPipeline(object):
         pass
 
     def process_item(self, item, spider):
+        """Usage 
+        if spider.name not in ['myspider1', 'myspider2', 'myspider3']:
+        if isinstance(item, FeedItem):
+        """
         vaild=True
         for data in item:
             if not data:
@@ -22,13 +26,13 @@ class VerifyPipeline(object):
         if vaild:
             pass
         return item
-        
+
 
 #2.download images
-class DownloadImagesPipeline(ImagesPipeline):
+class DownloadImagesPipeline(MyImagesPipeline):
     def get_media_requests(self, item, info):
         for image_url in item['screenshot']:
-            yield Request(image_url)
+            yield Request(url=image_url,meta={"path":item['packageName']})
 
     def item_completed(self, results, item, info):
         image_paths = [x['path'] for ok, x in results if ok]
