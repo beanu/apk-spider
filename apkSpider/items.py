@@ -23,8 +23,11 @@ class ApkItem(Item):
     price = Field()
     #image
     apkicon = Field()
+    apkiconPath = Field()
     bannerimage = Field()
+    bannerimagePath = Field()
     screenshot = Field()
+    screenshotPath = Field()
     #video
     video = Field()
     #description
