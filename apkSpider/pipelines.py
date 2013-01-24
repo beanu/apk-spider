@@ -5,7 +5,6 @@
 import pymongo
 from scrapy.exceptions import DropItem
 from scrapy.http import Request
-from apkSpider.mypipelines import MyImagesPipeline
 
 #1.Verify the validity of the data.Such as whether already exists
 class VerifyPipeline(object):
@@ -29,17 +28,6 @@ class VerifyPipeline(object):
 
 
 #2.download images
-class DownloadImagesPipeline(MyImagesPipeline):
-    def get_media_requests(self, item, info):
-        for image_url in item['screenshot']:
-            yield Request(url=image_url,meta={"path":item['packageName']})
-
-    def item_completed(self, results, item, info):
-        image_paths = [x['path'] for ok, x in results if ok]
-        if not image_paths:
-            raise DropItem("Item contains no images")
-        item['screenshotPath'] = image_paths
-        return item
 
 #3.store the data to MongoDB
 class StoreDataPipeline(object):

@@ -11,10 +11,11 @@ BOT_NAME = 'apkSpider'
 SPIDER_MODULES = ['apkSpider.spiders']
 NEWSPIDER_MODULE = 'apkSpider.spiders'
 
-ITEM_PIPELINES = ['apkSpider.pipelines.DownloadImagesPipeline','apkSpider.pipelines.StoreDataPipeline']
+ITEM_PIPELINES = ['apkSpider.imagepipelines.MyImagesPipeline','apkSpider.filepipelines.APKFilePipeline','apkSpider.pipelines.StoreDataPipeline']
 
 DOWNLOAD_DELAY = 0.25
 
+APKFILES_STORE = '/home/beanu/tmp'
 IMAGES_STORE = '/home/beanu/tmp'
 IMAGES_EXPIRES = 90
 

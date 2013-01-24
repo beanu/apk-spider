@@ -37,4 +37,5 @@ class ApkItem(Item):
     #other
     tags = Field()
     downloadUrl = Field()
+    apkPath = Field()
     comefrom = Field()

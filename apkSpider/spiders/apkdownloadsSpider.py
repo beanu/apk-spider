@@ -10,7 +10,7 @@ class ApkDownloadsSpider(CrawlSpider):
     name="apkdownloads"
     allowed_domains=["apkdownloads.com|play.google.com"]
     #start_urls=["http://www.apkdownloads.com"]
-    start_urls=["http://www.apkdownloads.com/2013/01/ninja-escape-v10-apk.html"]
+    start_urls=["http://www.apkdownloads.com/2013/01/race-stunt-fight-2-v111-apk.html"]
     #rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_\d{2}_\d{2}_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'/2013/\d{2}/.+?\.html']),callback='parse_game')]
     #rules=[Rule(SgmlLinkExtractor(allow=[r'/2013_01_11_archive.html']),follow=True),Rule(SgmlLinkExtractor(allow=[r'/2013/\d{2}/.+?\.html']),callback='parse_game')]
 
