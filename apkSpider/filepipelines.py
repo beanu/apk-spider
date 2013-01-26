@@ -5,19 +5,13 @@ from scrapy.shell import inspect_response
 
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import log
-from scrapy.stats import stats
-from scrapy.utils.misc import md5sum
 from scrapy.http import Request
-from scrapy import signals
 from scrapy.exceptions import DropItem, NotConfigured, IgnoreRequest
 from scrapy.contrib.pipeline.media import MediaPipeline
-from scrapy.http import FormRequest
 
 from collections import defaultdict
-from cStringIO import StringIO
 import re
 import os
-import hashlib
 
 class FileException(Exception):
 	"""General file error exception"""
@@ -38,7 +32,7 @@ class APKFilePipeline(MediaPipeline):
 
 
 	def media_downloaded(self, response, request, info):
-		log.msg('+++++++++++++++++++++++')
+		log.msg('-----Downloading+++++')
 		referer = request.headers.get('Referer')
 		if response.status != 200:
 			log.msg('File (code: %s): Error downloading file from %s referred in <%s>' \
@@ -56,8 +50,8 @@ class APKFilePipeline(MediaPipeline):
 		match = p.search(header)
 		if match:
 			suffix=match.group(1)
-		item = response.meta['item']
-		filename = self.gen_filename(item['packageName'],suffix)
+		packageName = response.meta['packageName']
+		filename = self.gen_filename(packageName,suffix)
 
 		absolute_path = self._get_filesystem_path(filename)
 		self._mkdir(os.path.dirname(absolute_path))
@@ -67,9 +61,18 @@ class APKFilePipeline(MediaPipeline):
 #		inspect_response(response)
 		return {'url': request.url, 'path': filename}
 
-	def gen_filename(self, url,suffix):
-		file_guid = hashlib.sha1(url).hexdigest()
-		return '%s.%s' % (file_guid,suffix);
+	def gen_filename(self, packageName,suffix):
+		# file_guid = hashlib.sha1(url).hexdigest()
+		_path=packageName.split('.')[-1].lower()
+		_pathA="a"
+		_pathB="b"
+		if len(_path)>=2:
+			_pathA=_path[0]
+			_pathB=_path[1]
+		elif len(_path)==1:
+			_pathA=_path[0]
+			_pathB=_path[0]
+		return '%s/%s/%s.%s' % (_pathA,_pathB,packageName,suffix);
 		
 
 	def _get_filesystem_path(self, key):
@@ -85,9 +88,9 @@ class APKFilePipeline(MediaPipeline):
 
 	def get_media_requests(self, item, info):
 		if item['downloadUrl']:
-			log.msg('-----++++++++++++++')
-			req = Request(url=item['downloadUrl'])
-			req.meta['item']=item
+			log.msg('-----Request+++++')
+			req = Request(url=item['downloadUrl'][0])
+			req.meta['packageName']=item['packageName']
 			return [req]
 			#yield Request(link)
 		return;

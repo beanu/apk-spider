@@ -8,7 +8,7 @@ from scrapy.item import Item, Field
 class ApkItem(Item):
     # define the fields for your item here like:
     name = Field()
-    packageName = Field()
+    packageName = Field() #Unique
     company = Field()
     #rate
     rate = Field()
@@ -39,3 +39,9 @@ class ApkItem(Item):
     downloadUrl = Field()
     apkPath = Field()
     comefrom = Field()
+
+class TopApkItem(Item):
+    topType = Field()
+    ranking = Field()
+    packageName = Field()
+    recordTime = Field()
